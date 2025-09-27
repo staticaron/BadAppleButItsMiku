@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "MikuEngine.h"
 
 MikuEngine::Application* MikuEngine::EntryPoint()

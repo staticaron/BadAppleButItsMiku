@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pch.h"
+
 #ifdef ME_PLATFORM_WINDOWS
 #ifdef ME_BUILD_DLL
 #define MIKU_API __declspec(dllexport)

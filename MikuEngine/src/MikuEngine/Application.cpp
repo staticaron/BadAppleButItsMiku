@@ -1,12 +1,14 @@
 #include "Application.h"
 
+#include "Core.h"
+
 namespace MikuEngine
 {
 	Application::Application()
 	{
 		if( !glfwInit() )
 		{
-			std::cout << "GLFW failed to initialize!" << std::endl;
+			spdlog::error( "GLFW failed to initialize!" );
 		}
 
 		glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
@@ -21,8 +23,11 @@ namespace MikuEngine
 			glfwTerminate();
 		}
 
+		glfwSetErrorCallback( glfwErrorCallback );
+
 		glEnable( GL_DEBUG_OUTPUT );
 		glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS );
+		glDebugMessageCallback( GLDebugMessageCallback, nullptr );
 
 		glEnable( GL_BLEND );
 		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -33,7 +38,7 @@ namespace MikuEngine
 		glCullFace( GL_FRONT );
 		glFrontFace( GL_CW );
 
-		// spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
+		spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
 	}
 
 	Application::~Application() {}

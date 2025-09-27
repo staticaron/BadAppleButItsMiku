@@ -1,0 +1,28 @@
+#include "IndexBuffer.h"
+
+#include "MikuEngine/Core.h"
+
+namespace MikuEngine
+{
+	IndexBuffer::IndexBuffer( void* data, unsigned int count ) : m_Count( count )
+	{
+		glCreateBuffers( 1, &m_RendererID );
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_RendererID );
+		glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( unsigned int ) * m_Count, data, GL_DYNAMIC_DRAW );
+	}
+
+	IndexBuffer::~IndexBuffer()
+	{
+		glDeleteBuffers( 1, &m_RendererID );
+	}
+
+	void IndexBuffer::Bind() const
+	{
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_RendererID );
+	}
+
+	void IndexBuffer::UnBind() const
+	{
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+	}
+}
