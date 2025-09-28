@@ -1,11 +1,13 @@
 #pragma once
 
+#include <iostream>
+
 #include "glad/gl.h"
 #include "GLFW/glfw3.h"
 
-#include <iostream>
-
 #include "Core.h"
+#include "Managers/ImguiManager.h"
+#include "Scene/BasicSceneImpl.h"
 
 namespace MikuEngine
 {
@@ -19,9 +21,16 @@ namespace MikuEngine
 
 		void Update();
 		void Render();
+
+		void RenderGeometry();
+		void RenderImgui();
+
 	private:
 		GLFWwindow* m_Window = nullptr;
 
+		ImguiManager m_ImguiManager;
+
+		BasicSceneImpl m_DefaultScene;
 	};
 
 	Application* EntryPoint();

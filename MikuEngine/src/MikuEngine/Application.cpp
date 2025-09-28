@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include "Core.h"
+#include "pch.h"
 
 namespace MikuEngine
 {
@@ -39,6 +40,8 @@ namespace MikuEngine
 		glFrontFace( GL_CW );
 
 		spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
+
+		m_ImguiManager.Init( m_Window );
 	}
 
 	Application::~Application() {}
@@ -64,6 +67,20 @@ namespace MikuEngine
 	{
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+		RenderGeometry();
+		RenderImgui();
+
 		glfwSwapBuffers( m_Window );
+	}
+
+	void Application::RenderGeometry() {}
+
+	void Application::RenderImgui()
+	{
+		m_ImguiManager.NewFrame();
+
+		m_DefaultScene.RenderImGui();
+
+		m_ImguiManager.RenderFrame();
 	}
 }

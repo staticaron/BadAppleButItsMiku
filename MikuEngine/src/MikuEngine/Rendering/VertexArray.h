@@ -8,18 +8,14 @@ namespace MikuEngine
 	class VertexArray
 	{
 	public:
-		VertexArray() {};
-		~VertexArray() {};
+		VertexArray();
+		~VertexArray();
 
 		void Bind() const;
 		void UnBind() const;
 
-		void AddBuffer( VertexBuffer vb, VertexBufferLayout vbl )
-		{
-			Bind();
-			vb.Bind();
+		void AddBuffer( VertexBuffer vb, VertexBufferLayout vbl );
 
-		}
 	private:
 		unsigned int m_RendererID = 0;
 	};

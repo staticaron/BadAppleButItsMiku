@@ -18,8 +18,12 @@ target_link_libraries("Sandbox" PRIVATE "MikuEngine")
 
 target_include_directories("Sandbox" PRIVATE "${SOURCES}")
 
-add_custom_command(TARGET "Sandbox" POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE:MikuEngine>               # DLL path
-        $<TARGET_FILE_DIR:Sandbox>           # Copy destination (exe folder)
+set_target_properties("Sandbox" PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
 )
+
+# add_custom_command(TARGET "Sandbox" POST_BUILD
+#     COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#         $<TARGET_FILE:MikuEngine>               # DLL path
+#         $<TARGET_FILE_DIR:Sandbox>           # Copy destination (exe folder)
+# )

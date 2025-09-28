@@ -25,4 +25,9 @@ namespace MikuEngine
 	{
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 	}
+
+	void IndexBuffer::PutData( const void* data, unsigned int count )
+	{
+		glBufferSubData( GL_ELEMENT_ARRAY_BUFFER, 0, sizeof( unsigned int ) * count, data );
+	}
 }

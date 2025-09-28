@@ -11,6 +11,8 @@ namespace MikuEngine
 		void Bind() const;
 		void UnBind() const;
 
+		void PutData( const void* data, unsigned int count );
+
 		inline unsigned int GetCount() const { return m_Count; }
 
 	private:

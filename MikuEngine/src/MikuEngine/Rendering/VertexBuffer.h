@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+
+#include "Rendering/Vertices.h"
+
 namespace MikuEngine
 {
 	class VertexBuffer
@@ -10,6 +14,8 @@ namespace MikuEngine
 
 		void Bind() const;
 		void UnBind() const;
+
+		void PutData( const void* data, size_t size );
 
 	private:
 		unsigned int m_RendererID = 0;

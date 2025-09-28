@@ -1,5 +1,14 @@
 #pragma once
 
+#include <array>
+#include <string>
+#include <unordered_map>
+
+#include "glad/gl.h"
+#include "glm.hpp"
+
+#include "Core.h"
+
 namespace MikuEngine
 {
 	class Shader
@@ -8,7 +17,57 @@ namespace MikuEngine
 		void Bind() const;
 		void UnBind() const;
 
+		void LoadFromFile( const std::string& filepath );
+		int GetUniformLocation( const std::string& uniformName );
+
+		template<typename T>
+		void SetUniform( const std::string& uniformName, T value ) { static_assert( false ); }
+
+		template<>
+		void SetUniform<float>( const std::string& uniformName, float value )
+		{
+			auto index = GetUniformLocation( uniformName );
+			glUniform1f( index, value );
+		}
+
+		template<>
+		void SetUniform<unsigned int>( const std::string& uniformName, unsigned int value )
+		{
+			auto index = GetUniformLocation( uniformName );
+			glUniform1f( index, value );
+		}
+
+		template<>
+		void SetUniform<glm::vec3>( const std::string& uniformName, glm::vec3 value )
+		{
+			auto index = GetUniformLocation( uniformName );
+			glUniform3f( index, value.x, value.y, value.z );
+		}
+
+		template<>
+		void SetUniform<glm::vec4>( const std::string& uniformName, glm::vec4 value )
+		{
+			auto index = GetUniformLocation( uniformName );
+			glUniform4f( index, value.x, value.y, value.z, value.w );
+		}
+
+		template<>
+		void SetUniform<glm::mat4>( const std::string& uniformName, glm::mat4 value )
+		{
+			auto index = GetUniformLocation( uniformName );
+			glUniformMatrix4fv( index, 1, GL_FALSE, &value[0][0] );
+		}
+
+		template<>
+		void SetUniform<std::array<int, 2>>( const std::string& uniformName, std::array<int, 2> value )
+		{
+			auto index = GetUniformLocation( uniformName );
+			glUniform1iv( index, 1, &value[0] );
+		}
+
 	private:
 		unsigned int m_RendererID = 0;
+
+		std::unordered_map<std::string, int> m_UniformLocations = {};
 	};
 }
