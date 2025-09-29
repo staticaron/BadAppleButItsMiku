@@ -6,10 +6,10 @@
 
 namespace MikuEngine
 {
-	class VertexBuffer
+	class MIKU_API VertexBuffer
 	{
 	public:
-		VertexBuffer( void* data, unsigned int sizeInBytes );
+		VertexBuffer( const void* data, unsigned int sizeInBytes );
 		~VertexBuffer();
 
 		void Bind() const;

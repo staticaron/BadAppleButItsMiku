@@ -5,7 +5,7 @@ namespace MikuEngine
 	Renderer::Renderer() {}
 	Renderer::~Renderer() {}
 
-	void Renderer::Draw( VertexArray va, IndexBuffer ib, Shader shader ) const
+	void Renderer::Draw( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const
 	{
 		va.Bind();
 		ib.Bind();

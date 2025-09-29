@@ -13,7 +13,7 @@ namespace MikuEngine
 		Renderer();
 		~Renderer();
 
-		void Draw( VertexArray va, IndexBuffer ib, Shader shader ) const;
+		void Draw( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const;
 	private:
 	};
 }

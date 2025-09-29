@@ -5,7 +5,7 @@
 
 namespace MikuEngine
 {
-	class VertexArray
+	class MIKU_API VertexArray
 	{
 	public:
 		VertexArray();
@@ -14,7 +14,7 @@ namespace MikuEngine
 		void Bind() const;
 		void UnBind() const;
 
-		void AddBuffer( VertexBuffer vb, VertexBufferLayout vbl );
+		void AddBuffer( const VertexBuffer& vb, const VertexBufferLayout& vbl );
 
 	private:
 		unsigned int m_RendererID = 0;

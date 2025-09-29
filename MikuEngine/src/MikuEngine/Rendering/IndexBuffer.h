@@ -2,7 +2,7 @@
 
 namespace MikuEngine
 {
-	class IndexBuffer
+	class MIKU_API IndexBuffer
 	{
 	public:
 		IndexBuffer( void* data, unsigned int count );
@@ -17,6 +17,6 @@ namespace MikuEngine
 
 	private:
 		unsigned int m_RendererID = 0;
-		unsigned int m_Count;
+		unsigned int m_Count = 0;
 	};
 }

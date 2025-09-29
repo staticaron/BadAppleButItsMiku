@@ -23,7 +23,7 @@ namespace MikuEngine
 		glBindVertexArray( 0 );
 	}
 
-	void VertexArray::AddBuffer( VertexBuffer vb, VertexBufferLayout vbl )
+	void VertexArray::AddBuffer( const VertexBuffer& vb, const VertexBufferLayout& vbl )
 	{
 		Bind();
 		vb.Bind();

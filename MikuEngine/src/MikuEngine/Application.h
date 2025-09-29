@@ -27,10 +27,11 @@ namespace MikuEngine
 
 	private:
 		GLFWwindow* m_Window = nullptr;
+		Renderer m_Renderer;
 
 		ImguiManager m_ImguiManager;
 
-		BasicSceneImpl m_DefaultScene;
+		std::unique_ptr<BasicSceneImpl> m_DefaultScene;
 	};
 
 	Application* EntryPoint();

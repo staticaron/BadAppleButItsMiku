@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Core.h"
+
 namespace MikuEngine
 {
-	class ImguiManager
+	class MIKU_API ImguiManager
 	{
 	public:
 		ImguiManager();

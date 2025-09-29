@@ -16,6 +16,8 @@ namespace MikuEngine
 		glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 6 );
 		glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
 
+		glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE );
+
 		m_Window = glfwCreateWindow( 800, 600, "MikuEngine", nullptr, nullptr );
 		glfwMakeContextCurrent( m_Window );
 
@@ -24,11 +26,11 @@ namespace MikuEngine
 			glfwTerminate();
 		}
 
-		glfwSetErrorCallback( glfwErrorCallback );
+		glfwSetErrorCallback( MikuEngine::Error::glfwErrorCallback );
 
 		glEnable( GL_DEBUG_OUTPUT );
 		glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS );
-		glDebugMessageCallback( GLDebugMessageCallback, nullptr );
+		glDebugMessageCallback( MikuEngine::Error::glDebugOutput, nullptr );
 
 		glEnable( GL_BLEND );
 		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -41,6 +43,7 @@ namespace MikuEngine
 
 		spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
 
+		m_DefaultScene = std::make_unique<BasicSceneImpl>();
 		m_ImguiManager.Init( m_Window );
 	}
 
@@ -73,13 +76,18 @@ namespace MikuEngine
 		glfwSwapBuffers( m_Window );
 	}
 
-	void Application::RenderGeometry() {}
+	void Application::RenderGeometry()
+	{
+		m_DefaultScene->Render( m_Renderer );
+
+
+	}
 
 	void Application::RenderImgui()
 	{
 		m_ImguiManager.NewFrame();
 
-		m_DefaultScene.RenderImGui();
+		m_DefaultScene->RenderImGui();
 
 		m_ImguiManager.RenderFrame();
 	}

@@ -2,19 +2,22 @@
 
 namespace MikuEngine
 {
+	BasicSceneImpl::BasicSceneImpl()
+	{
+
+	}
+
 	void BasicSceneImpl::Update( double dt )
 	{}
 
 	void BasicSceneImpl::Render( const Renderer& renderer )
 	{
-		spdlog::info( "Rendering!" );
+		SceneLevelValues values = { m_Camera };
+		m_Quad.Render( renderer, values );
 	}
 
 	void BasicSceneImpl::RenderImGui()
 	{
-		ImGui::Begin( "Basic Scene Impl" );
-		ImGui::End();
-
-		ImGui::ShowDemoWindow();
+		m_Quad.RenderImGui();
 	}
 }
