@@ -12,6 +12,7 @@ namespace MikuEngine
 	void Shader::UnBind() const
 	{
 		glUseProgram( 0 );
+		spdlog::warn( "VertexBuffer Deleted" );
 	}
 
 	void Shader::LoadFromFile( const std::string& filepath )
@@ -23,6 +24,8 @@ namespace MikuEngine
 
 	int Shader::GetUniformLocation( const std::string& uniformName )
 	{
+		Bind();
+
 		if( m_UniformLocations.find( uniformName ) != m_UniformLocations.end() )
 			return m_UniformLocations.at( uniformName );
 

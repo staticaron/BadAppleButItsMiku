@@ -11,7 +11,6 @@
 #include "Rendering/VertexBuffer.h"
 #include "Rendering/VertexBufferLayout.h"
 #include "Rendering/Vertices.h"
-#include "Scene/SceneLevelValues.h"
 
 namespace MikuEngine
 {
@@ -22,7 +21,7 @@ namespace MikuEngine
 		~BasicQuad() = default;
 
 		void Update( double dt ) {};
-		void Render( const Renderer& renderer, const SceneLevelValues& sceneLevelValues );
+		void Render( const Renderer& renderer );
 		void RenderImGui();
 
 		const std::array<unsigned int, 6>& GetDefaultIndices() const;
@@ -39,8 +38,5 @@ namespace MikuEngine
 		IndexBuffer m_IB;
 		VertexBufferLayout m_VBL;
 		Shader m_Shader;
-
-		std::array<unsigned int, 6> m_DefaultIndices;
-		std::array<float, 28> m_DefaultVerts;
 	};
 }

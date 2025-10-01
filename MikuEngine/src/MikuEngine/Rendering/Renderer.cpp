@@ -2,9 +2,6 @@
 
 namespace MikuEngine
 {
-	Renderer::Renderer() {}
-	Renderer::~Renderer() {}
-
 	void Renderer::Draw( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const
 	{
 		va.Bind();

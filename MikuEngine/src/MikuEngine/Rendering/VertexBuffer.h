@@ -15,9 +15,10 @@ namespace MikuEngine
 		void Bind() const;
 		void UnBind() const;
 
-		void PutData( const void* data, size_t size );
+		void PutData( const void* data, unsigned int size );
 
 	private:
 		unsigned int m_RendererID = 0;
+		unsigned int m_Size;
 	};
 }

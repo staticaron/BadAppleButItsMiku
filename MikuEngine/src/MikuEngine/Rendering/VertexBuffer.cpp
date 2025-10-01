@@ -4,7 +4,7 @@
 
 namespace MikuEngine
 {
-	VertexBuffer::VertexBuffer( const void* data, unsigned int size )
+	VertexBuffer::VertexBuffer( const void* data, unsigned int size ) : m_Size( size )
 	{
 		glGenBuffers( 1, &m_RendererID );
 		Bind();
@@ -26,8 +26,11 @@ namespace MikuEngine
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
 
-	void VertexBuffer::PutData( const void* data, size_t size )
+	void VertexBuffer::PutData( const void* data, unsigned int size )
 	{
+		ASSERT( m_RendererID != 0 );
+		ASSERT( size <= m_Size );
+
 		Bind();
 		glBufferSubData( GL_ARRAY_BUFFER, 0, size, data );
 	}

@@ -4,33 +4,34 @@
 
 namespace MikuEngine
 {
-	BasicQuad::BasicQuad() : m_VB( nullptr, sizeof( BasicVertex ) * 4 ), m_IB( nullptr, 6 )
+	BasicQuad::BasicQuad() : m_VB( nullptr, sizeof( float ) * 32 ), m_IB( nullptr, 6 )
 	{
-		m_VBL.Push<float>( 3 );
-		m_VA.AddBuffer( m_VB, m_VBL );
-
-		m_Shader.LoadFromFile( RESOURCE_DIR "shaders/base.shader" );
-		m_Shader.Bind();
-
-		m_DefaultIndices = {
+		std::array<unsigned int, 6> indices = {
 			0, 1, 2,
 			2, 3, 0
 		};
 
-		m_DefaultVerts = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		std::array<float, 28> verts = {
+			-1.0f, -1.0f, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f,
+			 1.05f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f,  1.0f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f
 		};
 
-		m_IB.PutData( m_DefaultIndices.data(), m_DefaultIndices.size() );
-		m_VB.PutData( m_DefaultVerts.data(), sizeof( float ) * m_DefaultVerts.size() );
+		m_VBL.Push<float>( 3 );
+		m_VBL.Push<float>( 4 );
+		m_VA.AddBuffer( m_VB, m_VBL );
+
+		m_VB.PutData( verts.data(), sizeof( float ) * verts.size() );
+		m_IB.PutData( indices.data(), indices.size() );
+
+		m_Shader.LoadFromFile( RESOURCE_DIR "shaders/base.shader" );
+		m_Shader.Bind();
 	}
 
-	void BasicQuad::Render( const Renderer& renderer, const SceneLevelValues& sceneLevelValues )
+	void BasicQuad::Render( const Renderer& renderer )
 	{
-		m_Shader.SetUniform( "u_MVP", glm::mat4( 1.0f ) );
+		// m_Shader.SetUniform( "u_MVP", sceneLevelValues.camera.GetViewProjectionMatrix() );
 		renderer.Draw( m_VA, m_IB, m_Shader );
 	}
 
@@ -44,15 +45,5 @@ namespace MikuEngine
 		ImGui::DragFloat3( "Scale", &m_Scale[0] );
 
 		ImGui::End();
-	}
-
-	const std::array<unsigned int, 6>& BasicQuad::GetDefaultIndices() const
-	{
-		return m_DefaultIndices;
-	}
-
-	const std::array<float, 28>& BasicQuad::GetDefaultVertices() const
-	{
-		return m_DefaultVerts;
 	}
 }

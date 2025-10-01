@@ -21,7 +21,6 @@
 
 #include "Managers/ImguiManager.h"
 
-#include "Camera/Camera.h"
 #include "Core.h"
 #include "Error.h"
 #include "Rendering/BasicQuad.h"
@@ -31,4 +30,3 @@
 #include "Rendering/ShaderHelper.h"
 #include "Rendering/VertexBuffer.h"
 #include "Rendering/Vertices.h"
-#include "Scene/SceneLevelValues.h"

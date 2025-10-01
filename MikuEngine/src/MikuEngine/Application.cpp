@@ -39,7 +39,7 @@ namespace MikuEngine
 
 		glEnable( GL_CULL_FACE );
 		glCullFace( GL_FRONT );
-		glFrontFace( GL_CW );
+		glFrontFace( GL_CCW );
 
 		spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
 
@@ -79,8 +79,6 @@ namespace MikuEngine
 	void Application::RenderGeometry()
 	{
 		m_DefaultScene->Render( m_Renderer );
-
-
 	}
 
 	void Application::RenderImgui()

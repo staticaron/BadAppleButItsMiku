@@ -12,8 +12,7 @@ namespace MikuEngine
 
 	void BasicSceneImpl::Render( const Renderer& renderer )
 	{
-		SceneLevelValues values = { m_Camera };
-		m_Quad.Render( renderer, values );
+		m_Quad.Render( renderer );
 	}
 
 	void BasicSceneImpl::RenderImGui()

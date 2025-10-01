@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Camera/Camera.h"
 #include "Core.h"
 #include "Rendering/BasicQuad.h"
 #include "Scene/Scene.h"
@@ -19,6 +18,5 @@ namespace MikuEngine
 
 	private:
 		BasicQuad m_Quad;
-		Camera m_Camera;
 	};
 }
