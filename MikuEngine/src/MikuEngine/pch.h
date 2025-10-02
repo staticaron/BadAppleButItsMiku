@@ -30,3 +30,6 @@
 #include "Rendering/ShaderHelper.h"
 #include "Rendering/VertexBuffer.h"
 #include "Rendering/Vertices.h"
+
+#include "Scene/Scene.h"
+#include "Scene/SceneStuff.h"

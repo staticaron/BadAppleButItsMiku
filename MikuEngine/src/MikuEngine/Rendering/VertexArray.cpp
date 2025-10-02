@@ -39,7 +39,5 @@ namespace MikuEngine
 
 			offset += element.count * VertexBufferElement::GetSizeOfType( element.type );
 		}
-
-		glBindVertexArray( 0 );
 	}
 }

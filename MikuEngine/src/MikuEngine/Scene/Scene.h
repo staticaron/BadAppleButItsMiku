@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Rendering/Renderer.h"
+#include "Scene/SceneStuff.h"
 
 namespace MikuEngine
 {

@@ -11,6 +11,7 @@
 #include "Rendering/VertexBuffer.h"
 #include "Rendering/VertexBufferLayout.h"
 #include "Rendering/Vertices.h"
+#include "Scene/SceneStuff.h"
 
 namespace MikuEngine
 {
@@ -20,19 +21,15 @@ namespace MikuEngine
 		BasicQuad();
 		~BasicQuad() = default;
 
-		void Update( double dt ) {};
-		void Render( const Renderer& renderer );
-		void RenderImGui();
+		const VertexBuffer& GetVB() const { return m_VB; };
+		const VertexArray& GetVA() const { return m_VA; };
+		const IndexBuffer& GetIB() const { return m_IB; };
+		const Shader& GetShader() const { return m_Shader; };
 
 		const std::array<unsigned int, 6>& GetDefaultIndices() const;
 		const std::array<float, 28>& GetDefaultVertices() const;
 
 	private:
-		glm::vec3 m_Position = glm::vec3( 0.0f );
-		glm::vec3 m_RotationAxis = { 0.0f, 0.0f, 1.0f };
-		float m_RotationValue = 0.0f;
-		glm::vec3 m_Scale = glm::vec3( 1.0f );
-
 		VertexBuffer m_VB;
 		VertexArray m_VA;
 		IndexBuffer m_IB;

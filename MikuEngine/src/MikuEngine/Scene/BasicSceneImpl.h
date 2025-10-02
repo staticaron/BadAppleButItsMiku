@@ -1,15 +1,16 @@
 #pragma once
 
 #include "Core.h"
-#include "Rendering/BasicQuad.h"
+#include "GameObject.h"
 #include "Scene/Scene.h"
+#include "Scene/SceneStuff.h"
 
 namespace MikuEngine
 {
 	class MIKU_API BasicSceneImpl : public Scene
 	{
 	public:
-		BasicSceneImpl();
+		BasicSceneImpl() = default;
 		~BasicSceneImpl() = default;
 
 		void Update( double dt ) override;
@@ -17,6 +18,8 @@ namespace MikuEngine
 		void RenderImGui() override;
 
 	private:
-		BasicQuad m_Quad;
+		SceneStuff m_SceneStuff;
+
+		GameObject m_GO;
 	};
 }
