@@ -6,7 +6,7 @@ namespace MikuEngine
 {
 	void GameObject::Update( double dt ) {}
 
-	void GameObject::Render( const Renderer& renderer, const SceneStuff& sceneStuff )
+	void GameObject::Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff )
 	{
 		auto shader = m_BasicQuad.GetShader();
 
@@ -16,7 +16,10 @@ namespace MikuEngine
 		glm::mat4 mvp = projMatrix * viewMatrix * modelMatrix;
 
 		shader.SetUniform<glm::mat4>( "u_MVP", projMatrix * viewMatrix * modelMatrix );
-		shader.SetUniform<glm::vec4>( "u_Tint", glm::vec4( 0.1f, 0.3f, 0.3f, 1.0f ) );
+
+		auto texture = appStuff.textureManager.GetTextureByIdentifier( m_TextureIdentifier );
+		texture.Bind();
+		shader.SetUniform<unsigned int>( "u_Texture", 0 );
 
 		renderer.Draw( m_BasicQuad.GetVA(), m_BasicQuad.GetIB(), m_BasicQuad.GetShader() );
 	}

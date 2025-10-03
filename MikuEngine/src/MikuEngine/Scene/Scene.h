@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ApplicationLevelStuff.h"
 #include "Rendering/Renderer.h"
 #include "Scene/SceneStuff.h"
 
@@ -12,7 +13,7 @@ namespace MikuEngine
 		virtual ~Scene() = default;
 
 		virtual void Update( double dt ) {};
-		virtual void Render( const Renderer& renderer ) {};
+		virtual void Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff ) {};
 		virtual void RenderImGui() {};
 
 	private:

@@ -7,6 +7,7 @@ add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glm)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/spdlog)
+add_subdirectory(vendor/stb)
 
 file(GLOB_RECURSE SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -43,6 +44,7 @@ target_link_libraries("MikuEngine" PUBLIC
     glm
     imgui
     spdlog
+    stb_image
 )
 
 set_target_properties("MikuEngine" PROPERTIES

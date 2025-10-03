@@ -5,7 +5,7 @@
 
 namespace MikuEngine
 {
-	Application::Application()
+	Application::Application() : m_FrameBuffer( m_FrameBufferSpecification )
 	{
 		if( !glfwInit() )
 		{
@@ -41,8 +41,11 @@ namespace MikuEngine
 
 		spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
 
+		m_FrameBuffer.CreateFrameBuffer();
+
 		m_DefaultScene = std::make_unique<BasicSceneImpl>();
-		m_ImguiManager.Init( m_Window );
+		m_AppStuff.imguiManager.Init( m_Window );
+		m_AppStuff.textureManager.LoadAllTextures();
 	}
 
 	Application::~Application() {}
@@ -66,9 +69,14 @@ namespace MikuEngine
 
 	void Application::Render()
 	{
-		glClear( GL_COLOR_BUFFER_BIT );
+		m_FrameBuffer.Bind();
 
+		glClear( GL_COLOR_BUFFER_BIT );
 		RenderGeometry();
+
+		m_FrameBuffer.UnBind();
+
+		glClear( GL_COLOR_BUFFER_BIT );
 		RenderImgui();
 
 		glfwSwapBuffers( m_Window );
@@ -76,15 +84,16 @@ namespace MikuEngine
 
 	void Application::RenderGeometry()
 	{
-		m_DefaultScene->Render( m_Renderer );
+		m_DefaultScene->Render( m_Renderer, m_AppStuff );
 	}
 
 	void Application::RenderImgui()
 	{
-		m_ImguiManager.NewFrame();
+		m_AppStuff.imguiManager.NewFrame();
 
+		m_AppStuff.imguiManager.RenderFrameBuffer( m_FrameBufferSpecification, m_FrameBuffer.GetTexture() );
 		m_DefaultScene->RenderImGui();
 
-		m_ImguiManager.RenderFrame();
+		m_AppStuff.imguiManager.RenderFrame();
 	}
 }

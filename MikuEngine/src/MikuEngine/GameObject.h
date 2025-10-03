@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string_view>
+
+#include "ApplicationLevelStuff.h"
 #include "Rendering/BasicQuad.h"
 #include "Rendering/Renderer.h"
 #include "Scene/SceneStuff.h"
@@ -13,7 +16,7 @@ namespace MikuEngine
 		~GameObject() = default;
 
 		void Update( double dt );
-		void Render( const Renderer& renderer, const SceneStuff& sceneStuff );
+		void Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff );
 		void RenderImGui();
 
 		glm::mat4 GetModelMatrix() const;
@@ -25,5 +28,6 @@ namespace MikuEngine
 		glm::vec3 m_Scale = glm::vec3( 100.0f );
 
 		BasicQuad m_BasicQuad;
+		std::string_view m_TextureIdentifier = "miku";
 	};
 }

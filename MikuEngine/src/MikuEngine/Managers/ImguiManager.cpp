@@ -40,7 +40,7 @@ namespace MikuEngine
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		// ImGui::DockSpaceOverViewport();
+		ImGui::DockSpaceOverViewport();
 	}
 
 	void ImguiManager::RenderFrame() const
@@ -56,7 +56,13 @@ namespace MikuEngine
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
 			glfwMakeContextCurrent( backup_current_context );
-
 		}
+	}
+
+	void ImguiManager::RenderFrameBuffer( const FrameBufferSpecification& specification, unsigned int textureID ) const
+	{
+		ImGui::Begin( "Viewport" );
+		ImGui::Image( (void*)(intptr_t)textureID, { static_cast<float>( specification.width ), static_cast<float>( specification.height ) } );
+		ImGui::End();
 	}
 }

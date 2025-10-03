@@ -1,13 +1,15 @@
 #include "BasicSceneImpl.h"
 
+#include "pch.h"
+
 namespace MikuEngine
 {
 	void BasicSceneImpl::Update( double dt )
 	{}
 
-	void BasicSceneImpl::Render( const Renderer& renderer )
+	void BasicSceneImpl::Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff )
 	{
-		m_GO.Render( renderer, m_SceneStuff );
+		m_GO.Render( renderer, appStuff, m_SceneStuff );
 	}
 
 	void BasicSceneImpl::RenderImGui()

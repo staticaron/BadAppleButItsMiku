@@ -6,7 +6,11 @@
 #include "GLFW/glfw3.h"
 
 #include "Core.h"
+
+#include "ApplicationLevelStuff.h"
 #include "Managers/ImguiManager.h"
+#include "Managers/TextureManager.h"
+#include "Rendering/FrameBuffer.h"
 #include "Scene/BasicSceneImpl.h"
 
 namespace MikuEngine
@@ -29,7 +33,10 @@ namespace MikuEngine
 		GLFWwindow* m_Window = nullptr;
 		Renderer m_Renderer;
 
-		ImguiManager m_ImguiManager;
+		FrameBufferSpecification m_FrameBufferSpecification = { 800, 600, 1 };
+		FrameBuffer m_FrameBuffer;
+
+		ApplicationLevelStuff m_AppStuff;
 
 		std::unique_ptr<BasicSceneImpl> m_DefaultScene;
 	};

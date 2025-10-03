@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ApplicationLevelStuff.h"
 #include "Core.h"
 #include "GameObject.h"
 #include "Scene/Scene.h"
@@ -14,7 +15,7 @@ namespace MikuEngine
 		~BasicSceneImpl() = default;
 
 		void Update( double dt ) override;
-		void Render( const Renderer& renderer ) override;
+		void Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff ) override;
 		void RenderImGui() override;
 
 	private:

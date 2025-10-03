@@ -34,7 +34,7 @@ namespace MikuEngine
 		void SetUniform<unsigned int>( const std::string& uniformName, unsigned int value )
 		{
 			auto index = GetUniformLocation( uniformName );
-			glUniform1f( index, value );
+			glUniform1i( index, value );
 		}
 
 		template<>
