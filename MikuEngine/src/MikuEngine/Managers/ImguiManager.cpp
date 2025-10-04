@@ -19,10 +19,10 @@ namespace MikuEngine
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
 		(void)io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewport / Platform Windows
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		io.ConfigFlags |= ImGuiDockNodeFlags_PassthruCentralNode;
 
 		auto defaultFont = io.Fonts->AddFontFromFileTTF( IMGUI_FONT, 13 );
@@ -59,10 +59,20 @@ namespace MikuEngine
 		}
 	}
 
-	void ImguiManager::RenderFrameBuffer( const FrameBufferSpecification& specification, unsigned int textureID ) const
+	void ImguiManager::RenderFrameBuffer( FrameBuffer& frameBuffer, unsigned int textureID, DataContainer& dataContainer )
 	{
 		ImGui::Begin( "Viewport" );
-		ImGui::Image( (void*)(intptr_t)textureID, { static_cast<float>( specification.width ), static_cast<float>( specification.height ) } );
+
+		ImVec2 windowSize = ImGui::GetWindowSize();
+
+		if( dataContainer.GetViewportDimensions() != *(glm::vec2*)&windowSize )
+		{
+			frameBuffer.Resize( static_cast<float>( windowSize.x ), static_cast<float>( windowSize.y ) );
+			dataContainer.SetViewportDimensions( *(glm::vec2*)&windowSize );
+		}
+
+		ImGui::Image( (void*)(intptr_t)textureID, { static_cast<float>( frameBuffer.GetSpecification().width ), static_cast<float>( frameBuffer.GetSpecification().height ) }, { 0, 1 }, { 1, 0 } );
+
 		ImGui::End();
 	}
 }

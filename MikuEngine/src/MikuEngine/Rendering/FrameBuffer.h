@@ -17,6 +17,7 @@ namespace MikuEngine
 
 		void CreateFrameBuffer();
 		void Update( const FrameBufferSpecification& specification );
+		void Resize( uint32_t width, uint32_t height );
 
 		void Destroy();
 

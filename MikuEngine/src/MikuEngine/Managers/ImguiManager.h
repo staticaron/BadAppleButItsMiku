@@ -1,7 +1,10 @@
 #pragma once
 
+#include "glm.hpp"
+
 #include "Core.h"
 
+#include "Data/DataContainer.h"
 #include "Rendering/FrameBuffer.h"
 
 namespace MikuEngine
@@ -17,7 +20,7 @@ namespace MikuEngine
 		void NewFrame() const;
 		void RenderFrame() const;
 
-		void RenderFrameBuffer( const FrameBufferSpecification& specification, unsigned int textureID ) const;
+		void RenderFrameBuffer( FrameBuffer& frameBuffer, unsigned int textureID, DataContainer& dataContainer );
 
 	private:
 	};

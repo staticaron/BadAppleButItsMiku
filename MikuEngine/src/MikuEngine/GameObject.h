@@ -22,7 +22,7 @@ namespace MikuEngine
 		glm::mat4 GetModelMatrix() const;
 
 	private:
-		glm::vec3 m_Position = glm::vec3( 100.0f, 100.0f, 0.0f );
+		glm::vec3 m_Position = glm::vec3( 100.0f );
 		glm::vec3 m_RotationAxis = { 0.0f, 0.0f, 1.0f };
 		float m_RotationValue = 0.0f;
 		glm::vec3 m_Scale = glm::vec3( 100.0f );

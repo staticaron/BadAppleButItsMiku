@@ -8,6 +8,7 @@
 #include "Core.h"
 
 #include "ApplicationLevelStuff.h"
+#include "Data/DataContainer.h"
 #include "Managers/ImguiManager.h"
 #include "Managers/TextureManager.h"
 #include "Rendering/FrameBuffer.h"
@@ -21,6 +22,8 @@ namespace MikuEngine
 		Application();
 		~Application();
 
+		static Application& Get();
+
 		void Run();
 
 		void Update();
@@ -28,6 +31,8 @@ namespace MikuEngine
 
 		void RenderGeometry();
 		void RenderImgui();
+
+		static const DataContainer& GetDataContainer() { return Get().m_DataContainer; }
 
 	private:
 		GLFWwindow* m_Window = nullptr;
@@ -37,6 +42,7 @@ namespace MikuEngine
 		FrameBuffer m_FrameBuffer;
 
 		ApplicationLevelStuff m_AppStuff;
+		DataContainer m_DataContainer;
 
 		std::unique_ptr<BasicSceneImpl> m_DefaultScene;
 	};

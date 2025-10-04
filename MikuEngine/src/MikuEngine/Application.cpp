@@ -5,8 +5,12 @@
 
 namespace MikuEngine
 {
+	Application* s_App;
+
 	Application::Application() : m_FrameBuffer( m_FrameBufferSpecification )
 	{
+		s_App = this;
+
 		if( !glfwInit() )
 		{
 			spdlog::error( "GLFW failed to initialize!" );
@@ -18,7 +22,9 @@ namespace MikuEngine
 
 		glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE );
 
-		m_Window = glfwCreateWindow( 800, 600, "MikuEngine", nullptr, nullptr );
+		m_Window = glfwCreateWindow( 1600, 900, "MikuEngine", nullptr, nullptr );
+		glfwMaximizeWindow( m_Window );
+
 		glfwMakeContextCurrent( m_Window );
 
 		if( !gladLoadGL( glfwGetProcAddress ) )
@@ -35,10 +41,6 @@ namespace MikuEngine
 		glEnable( GL_BLEND );
 		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
-		glEnable( GL_CULL_FACE );
-		glCullFace( GL_FRONT );
-		glFrontFace( GL_CCW );
-
 		spdlog::info( reinterpret_cast<const char*>( glGetString( GL_VERSION ) ) );
 
 		m_FrameBuffer.CreateFrameBuffer();
@@ -49,6 +51,12 @@ namespace MikuEngine
 	}
 
 	Application::~Application() {}
+
+	Application& Application::Get()
+	{
+		ASSERT( s_App );
+		return *s_App;
+	}
 
 	void Application::Run()
 	{
@@ -71,6 +79,7 @@ namespace MikuEngine
 	{
 		m_FrameBuffer.Bind();
 
+		glClearColor( 0.4f, 0.4f, 0.4f, 1.0f );
 		glClear( GL_COLOR_BUFFER_BIT );
 		RenderGeometry();
 
@@ -91,7 +100,7 @@ namespace MikuEngine
 	{
 		m_AppStuff.imguiManager.NewFrame();
 
-		m_AppStuff.imguiManager.RenderFrameBuffer( m_FrameBufferSpecification, m_FrameBuffer.GetTexture() );
+		m_AppStuff.imguiManager.RenderFrameBuffer( m_FrameBuffer, m_FrameBuffer.GetTexture(), m_DataContainer );
 		m_DefaultScene->RenderImGui();
 
 		m_AppStuff.imguiManager.RenderFrame();

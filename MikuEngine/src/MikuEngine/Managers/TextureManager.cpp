@@ -1,7 +1,5 @@
 #include "TextureManager.h"
 
-#include <cassert>
-
 #include "pch.h"
 
 namespace MikuEngine

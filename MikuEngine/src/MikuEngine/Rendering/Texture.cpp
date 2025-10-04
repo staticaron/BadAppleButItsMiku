@@ -6,11 +6,7 @@ namespace MikuEngine
 {
 	Texture::Texture( const std::string& filepath )
 	{
-		if( !std::filesystem::exists( filepath ) )
-		{
-			spdlog::error( "Texture @ Location : ", filepath, "not found!" );
-			return;
-		}
+		ASSERT( std::filesystem::exists( filepath ) );
 
 		stbi_set_flip_vertically_on_load( false );
 

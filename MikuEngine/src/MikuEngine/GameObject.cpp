@@ -10,12 +10,9 @@ namespace MikuEngine
 	{
 		auto shader = m_BasicQuad.GetShader();
 
-		glm::mat4 projMatrix = glm::ortho( 0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f );
-		glm::mat4 viewMatrix = sceneStuff.camera.GetViewMatrix();
-		glm::mat4 modelMatrix = GetModelMatrix();
-		glm::mat4 mvp = projMatrix * viewMatrix * modelMatrix;
+		glm::mat4 mvp = sceneStuff.camera.GetMVPFromModelMatrix( GetModelMatrix() );
 
-		shader.SetUniform<glm::mat4>( "u_MVP", projMatrix * viewMatrix * modelMatrix );
+		shader.SetUniform<glm::mat4>( "u_MVP", mvp );
 
 		auto texture = appStuff.textureManager.GetTextureByIdentifier( m_TextureIdentifier );
 		texture.Bind();

@@ -18,6 +18,16 @@ namespace MikuEngine
 		CreateFrameBuffer();
 	}
 
+	void FrameBuffer::Resize( uint32_t width, uint32_t height )
+	{
+		m_Specification.width = width;
+		m_Specification.height = height;
+
+		Destroy();
+		CreateFrameBuffer();
+	}
+
+
 	void FrameBuffer::CreateFrameBuffer()
 	{
 		glGenFramebuffers( 1, &m_RendererID );
@@ -48,6 +58,7 @@ namespace MikuEngine
 	void FrameBuffer::Bind() const
 	{
 		glBindFramebuffer( GL_FRAMEBUFFER, m_RendererID );
+		glViewport( 0, 0, m_Specification.width, m_Specification.height );
 	}
 
 	void FrameBuffer::UnBind() const

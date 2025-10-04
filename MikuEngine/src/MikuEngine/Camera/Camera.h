@@ -12,6 +12,7 @@ namespace MikuEngine
 
 		glm::mat4 GetViewProjectionMatrix() const;
 		glm::mat4 GetViewMatrix() const;
+		glm::mat4 GetMVPFromModelMatrix( glm::mat4 modelMatrix ) const;
 
 		void Translate( glm::vec3 delta );
 		void SetPosition( glm::vec3 newPos );

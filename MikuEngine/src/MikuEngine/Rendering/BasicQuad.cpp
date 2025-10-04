@@ -12,10 +12,10 @@ namespace MikuEngine
 		};
 
 		std::array<float, 20> verts = {
-			0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-			1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-			1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 1.0f, 0.0f, 0.0f, 1.0f
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f
 		};
 
 		m_VB.PutData( verts.data(), sizeof( float ) * verts.size() );

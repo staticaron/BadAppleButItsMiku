@@ -24,6 +24,7 @@
 #include "Core.h"
 #include "Error.h"
 
+#include "Application.h"
 #include "ApplicationLevelStuff.h"
 
 #include "Managers/ImguiManager.h"
@@ -41,3 +42,5 @@
 
 #include "Scene/Scene.h"
 #include "Scene/SceneStuff.h"
+
+#include "Data/DataContainer.h"
