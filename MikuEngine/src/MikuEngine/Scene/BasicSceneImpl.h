@@ -5,13 +5,14 @@
 #include "GameObject.h"
 #include "Scene/Scene.h"
 #include "Scene/SceneStuff.h"
+#include "Video/VideoRenderer.h"
 
 namespace MikuEngine
 {
 	class MIKU_API BasicSceneImpl : public Scene
 	{
 	public:
-		BasicSceneImpl() = default;
+		BasicSceneImpl();
 		~BasicSceneImpl() = default;
 
 		void Update( double dt ) override;
@@ -21,6 +22,9 @@ namespace MikuEngine
 	private:
 		SceneStuff m_SceneStuff;
 
+		VideoRenderer m_VideoRenderer;
+
 		GameObject m_GO;
+
 	};
 }

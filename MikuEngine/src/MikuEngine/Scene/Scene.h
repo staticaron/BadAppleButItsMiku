@@ -9,9 +9,6 @@ namespace MikuEngine
 	class Scene
 	{
 	public:
-		Scene() = default;
-		virtual ~Scene() = default;
-
 		virtual void Update( double dt ) {};
 		virtual void Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff ) {};
 		virtual void RenderImGui() {};

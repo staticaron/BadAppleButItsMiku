@@ -16,7 +16,7 @@ add_executable("Sandbox" "${SOURCES}")
 
 target_link_libraries("Sandbox" PRIVATE "MikuEngine")
 
-target_include_directories("Sandbox" PRIVATE "${SOURCES}")
+target_include_directories("Sandbox" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
 set_target_properties("Sandbox" PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}

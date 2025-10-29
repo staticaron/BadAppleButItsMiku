@@ -1,25 +1,28 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <opencv2/opencv.hpp>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include <vector>
 
+#include "glad/gl.h"
+
+#include "GLFW/glfw3.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "glad/gl.h"
-#include "glfw/glfw3.h"
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/random.hpp"
 #include "imgui.h"
 #include "spdlog/spdlog.h"
-#include "stb_image.h"
 
 #include "Core.h"
 #include "Error.h"

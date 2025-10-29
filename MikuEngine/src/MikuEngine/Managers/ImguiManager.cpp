@@ -34,6 +34,11 @@ namespace MikuEngine
 		ImGui_ImplOpenGL3_Init();
 	}
 
+	void ImguiManager::Update( double deltaTime )
+	{
+		m_DeltaTime = deltaTime;
+	}
+
 	void ImguiManager::NewFrame() const
 	{
 		ImGui_ImplOpenGL3_NewFrame();
@@ -61,7 +66,7 @@ namespace MikuEngine
 
 	void ImguiManager::RenderFrameBuffer( FrameBuffer& frameBuffer, unsigned int textureID, DataContainer& dataContainer )
 	{
-		ImGui::Begin( "Viewport" );
+		ImGui::Begin( "Viewport " );
 
 		ImVec2 windowSize = ImGui::GetWindowSize();
 
@@ -72,6 +77,14 @@ namespace MikuEngine
 		}
 
 		ImGui::Image( (void*)(intptr_t)textureID, { static_cast<float>( frameBuffer.GetSpecification().width ), static_cast<float>( frameBuffer.GetSpecification().height ) }, { 0, 1 }, { 1, 0 } );
+
+		ImGui::End();
+
+		ImGui::Begin( "Viewport Details" );
+
+		int frameRate = 1 / m_DeltaTime;
+
+		IMGUI_DISABLED( ImGui::DragInt( "FrameRate", &frameRate ) );
 
 		ImGui::End();
 	}

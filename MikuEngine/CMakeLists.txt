@@ -1,52 +1,64 @@
 cmake_minimum_required(VERSION 3.18)
+project("MikuEngine" CXX)
 
-project("MikuEngine")
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glm)
 add_subdirectory(vendor/imgui)
-add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/stb)
+add_subdirectory(vendor/spdlog)
 
-file(GLOB_RECURSE SOURCES
+find_package(OpenCV REQUIRED)
+
+file(GLOB_RECURSE ENGINE_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
 )
 
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
-)
+add_library(MikuEngine SHARED ${ENGINE_SOURCES})
 
-add_library("MikuEngine" SHARED "${SOURCES}")
+set_target_properties(MikuEngine PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-target_precompile_headers("MikuEngine" PRIVATE
+set_target_properties(MikuEngine PROPERTIES CXX_PRECOMPILE_HEADERS_SUPPORTED TRUE)
+
+target_precompile_headers(MikuEngine PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/MikuEngine/pch.h"
 )
 
-target_compile_definitions("MikuEngine" PUBLIC ME_PLATFORM_WINDOWS)
-target_compile_definitions("MikuEngine" PUBLIC ME_BUILD_DLL)
+if (CMAKE_BUILD_TYPE MATCHES "Debug")
+    target_compile_definitions(MikuEngine PUBLIC DEBUG)
+endif()
 
-target_compile_definitions("MikuEngine" PUBLIC IMGUI_FONT="${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/fonts/jetbrainsmono.ttf")
-target_compile_definitions("MikuEngine" PUBLIC RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources/")
-# target_compile_definitions("MikuEngine" PUBLIC RESOURCE_DIR="")
-
-target_include_directories("MikuEngine" PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/MikuEngine/"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src"
-    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm"
+target_compile_definitions(MikuEngine PUBLIC
+    ME_BUILD_DLL
+    IMGUI_FONT="${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/fonts/jetbrainsmono.ttf"
+    RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources/"
 )
 
-target_link_libraries("MikuEngine" PUBLIC
+target_include_directories(MikuEngine PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/MikuEngine"
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm"
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/include"
+    ${OpenCV_INCLUDE_DIRS}
+)
+
+target_link_libraries(MikuEngine PUBLIC
     glad
     glfw
     glm
     imgui
     spdlog
     stb_image
+    ${OpenCV_LIBS}
+    dl
 )
 
-set_target_properties("MikuEngine" PROPERTIES
+set(BIN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+set_target_properties(MikuEngine PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
 )

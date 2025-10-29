@@ -26,8 +26,10 @@ namespace MikuEngine
 		const IndexBuffer& GetIB() const { return m_IB; };
 		const Shader& GetShader() const { return m_Shader; };
 
-		const std::array<unsigned int, 6>& GetDefaultIndices() const;
-		const std::array<float, 28>& GetDefaultVertices() const;
+		static const std::array<unsigned int, 6>& GetDefaultIndices();
+		static const std::array<BasicVertex, 4>& GetDefaultVertices();
+
+		static std::array<BasicVertex, 4> GetVertsFromDetails( const SceneStuff& sceneStuff, glm::vec3 position, glm::vec2 size );
 
 	private:
 		VertexBuffer m_VB;
@@ -35,5 +37,17 @@ namespace MikuEngine
 		IndexBuffer m_IB;
 		VertexBufferLayout m_VBL;
 		Shader m_Shader;
+
+		static inline std::array<BasicVertex, 4> m_Verts = {
+			BasicVertex( { -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f } ),
+			BasicVertex( {  0.5f,  0.5f, 0.0f }, { 1.0f, 1.0f } ),
+			BasicVertex( {  0.5f, -0.5f, 0.0f }, { 1.0f, 0.0f } ),
+			BasicVertex( { -0.5f, -0.5f, 0.0f }, { 0.0f, 0.0} )
+		};
+
+		static inline std::array<unsigned int, 6> m_Indices = {
+			0, 1, 2,
+			2, 3, 0
+		};
 	};
 }
