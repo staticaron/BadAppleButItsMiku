@@ -4,12 +4,14 @@
 #include "Rendering/Shader.h"
 #include "Rendering/VertexArray.h"
 
-namespace MikuEngine {
-class Renderer {
-public:
-  void Draw(const VertexArray &va, const IndexBuffer &ib,
-            const Shader &shader) const;
+namespace MikuEngine
+{
+	class Renderer
+	{
+	  public:
+		void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+		void DrawPoints(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
 
-private:
-};
+	  private:
+	};
 } // namespace MikuEngine

@@ -4,6 +4,7 @@
 out/
 build/
 .vs/
+.cache
 
 ### C++ ###
 # Prerequisites
