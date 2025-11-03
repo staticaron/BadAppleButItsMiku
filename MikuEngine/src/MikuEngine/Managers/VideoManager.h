@@ -9,7 +9,7 @@ namespace MikuEngine
 {
 	class MIKU_API VideoManager
 	{
-	public:
+	  public:
 		VideoManager();
 		~VideoManager();
 
@@ -20,7 +20,7 @@ namespace MikuEngine
 
 		glm::ivec2 GetVideoDimensions() const { return m_VideoDimension; }
 
-	private:
+	  private:
 		cv::VideoCapture m_Video;
 
 		glm::ivec2 m_VideoDimension = {};
@@ -32,4 +32,4 @@ namespace MikuEngine
 
 		double m_ElapsedTime = 0.0f;
 	};
-}
+} // namespace MikuEngine

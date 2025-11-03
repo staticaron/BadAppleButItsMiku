@@ -9,8 +9,8 @@ namespace MikuEngine
 	class Renderer
 	{
 	  public:
-		void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
-		void DrawPoints(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+		void Draw( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const;
+		void DrawPoints( const VertexArray& va, const IndexBuffer& ib, const Shader& shader, unsigned int countToDraw = -1 ) const;
 
 	  private:
 	};

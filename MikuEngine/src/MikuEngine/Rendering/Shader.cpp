@@ -17,24 +17,25 @@ namespace MikuEngine
 
 	void Shader::LoadFromFile( const std::string& filepath )
 	{
-		std::string vertexShader = "", fragmentShader = "";
-		ShaderParser::ParseShader( filepath, vertexShader, fragmentShader );
-		m_RendererID = ShaderParser::CreateShader( vertexShader, fragmentShader );
+		std::string vertexShader = "", fragmentShader = "", geometryShader = "";
+		ShaderParser::ParseShader( filepath, vertexShader, fragmentShader, geometryShader );
+		m_RendererID = ShaderParser::CreateShader( vertexShader, fragmentShader, geometryShader );
 	}
 
 	int Shader::GetUniformLocation( const std::string& uniformName )
 	{
 		Bind();
 
-		if( m_UniformLocations.find( uniformName ) != m_UniformLocations.end() )
+		if ( m_UniformLocations.find( uniformName ) != m_UniformLocations.end() )
 			return m_UniformLocations.at( uniformName );
 
 		int location = glGetUniformLocation( m_RendererID, uniformName.c_str() );
 
-		if( location < 0 ) std::cout << "Error Occured while trying to GetUniform named " << uniformName << std::endl;
+		if ( location < 0 )
+			std::cout << "Error Occured while trying to GetUniform named " << uniformName << std::endl;
 
-		m_UniformLocations[uniformName] = location;
+		m_UniformLocations[ uniformName ] = location;
 
 		return location;
 	}
-}
+} // namespace MikuEngine

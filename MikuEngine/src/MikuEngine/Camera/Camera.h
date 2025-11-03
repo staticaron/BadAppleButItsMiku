@@ -6,8 +6,8 @@ namespace MikuEngine
 {
 	class MIKU_API Camera
 	{
-	public:
-		Camera() = default;
+	  public:
+		Camera();
 		~Camera() = default;
 
 		glm::mat4 GetViewProjectionMatrix() const;
@@ -17,12 +17,15 @@ namespace MikuEngine
 		void Translate( glm::vec3 delta );
 		void SetPosition( glm::vec3 newPos );
 
+		void SetZoom( float newZoom );
+		void Zoom( float amountToZoom );
+
 		void RenderImGui();
 
-	private:
+	  private:
 		glm::vec3 m_Position = glm::vec3( 0.0f );
-		glm::vec3 m_Scale = glm::vec3( 1.0f );
+		float m_Zoom = 45.0f;
 		glm::vec3 m_RotationAxis = { 0.0f, 1.0f, 0.0f };
 		float m_RotationValue = 0.0f;
 	};
-}
+} // namespace MikuEngine

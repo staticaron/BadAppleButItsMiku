@@ -3,7 +3,6 @@ project("MikuEngine" CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glfw)
@@ -11,6 +10,12 @@ add_subdirectory(vendor/glm)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/stb)
 add_subdirectory(vendor/spdlog)
+
+set(FMOD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmod")
+set(FMOD_INC_DIR "${FMOD_DIR}/inc")
+set(FMOD_LIB_DIR "${FMOD_DIR}/lib/x64")
+
+find_library(FMOD_LIBRARY NAMES fmod_vc PATHS ${FMOD_LIB_DIR})
 
 find_package(OpenCV REQUIRED)
 
@@ -20,8 +25,6 @@ file(GLOB_RECURSE ENGINE_SOURCES
 )
 
 add_library(MikuEngine SHARED ${ENGINE_SOURCES})
-
-set_target_properties(MikuEngine PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 set_target_properties(MikuEngine PROPERTIES CXX_PRECOMPILE_HEADERS_SUPPORTED TRUE)
 
@@ -34,6 +37,7 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
 endif()
 
 target_compile_definitions(MikuEngine PUBLIC
+    ME_PLATFORM_WINDOWS
     ME_BUILD_DLL
     IMGUI_FONT="${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/fonts/jetbrainsmono.ttf"
     RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources/"
@@ -44,7 +48,8 @@ target_include_directories(MikuEngine PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/src/MikuEngine"
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm"
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/include"
-    ${OpenCV_INCLUDE_DIRS}
+    ${OpenCV_INCLUDE_DIR}
+    ${FMOD_INC_DIR}
 )
 
 target_link_libraries(MikuEngine PUBLIC
@@ -55,10 +60,17 @@ target_link_libraries(MikuEngine PUBLIC
     spdlog
     stb_image
     ${OpenCV_LIBS}
-    dl
+    ${FMOD_LIBRARY}
 )
 
-set(BIN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+set(BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 set_target_properties(MikuEngine PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${FMOD_LIB_DIR}/fmod.dll"
+        ${BIN_DIR}
+    COMMENT "Copying FMOD dll files to the bin directory"
 )

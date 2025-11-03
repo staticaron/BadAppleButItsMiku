@@ -4,7 +4,9 @@
 
 namespace MikuEngine
 {
-	FrameBuffer::FrameBuffer( const FrameBufferSpecification& specification ) : m_Specification( specification ), m_RendererID( 0 ), m_TextureID( 0 ) {}
+	FrameBuffer::FrameBuffer( const FrameBufferSpecification& specification ) : m_Specification( specification ), m_RendererID( 0 ), m_TextureID( 0 )
+	{
+	}
 
 	FrameBuffer::~FrameBuffer()
 	{
@@ -20,13 +22,12 @@ namespace MikuEngine
 
 	void FrameBuffer::Resize( uint32_t width, uint32_t height )
 	{
-		m_Specification.width = width;
+		m_Specification.width  = width;
 		m_Specification.height = height;
 
 		Destroy();
 		CreateFrameBuffer();
 	}
-
 
 	void FrameBuffer::CreateFrameBuffer()
 	{
@@ -43,7 +44,7 @@ namespace MikuEngine
 
 		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureID, 0 );
 
-		ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE );
+		ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE, "Frame Buffer is not complete to Render\n" );
 
 		glBindTexture( GL_TEXTURE_2D, 0 );
 		glBindFramebuffer( GL_FRAMEBUFFER, 0 );
@@ -65,4 +66,4 @@ namespace MikuEngine
 	{
 		glBindFramebuffer( GL_FRAMEBUFFER, 0 );
 	}
-}
+} // namespace MikuEngine

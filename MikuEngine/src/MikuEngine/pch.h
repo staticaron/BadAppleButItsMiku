@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#include <fmod.hpp>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -15,9 +16,9 @@
 
 #include "glad/gl.h"
 
-#include "GLFW/glfw3.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
+#include "GLFW/glfw3.h"
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/random.hpp"

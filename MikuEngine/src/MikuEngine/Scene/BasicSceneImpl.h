@@ -11,20 +11,19 @@ namespace MikuEngine
 {
 	class MIKU_API BasicSceneImpl : public Scene
 	{
-	public:
+	  public:
 		BasicSceneImpl();
 		~BasicSceneImpl() = default;
 
-		void Update( double dt ) override;
+		void Update( ApplicationLevelStuff& appStuff, double dt ) override;
 		void Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff ) override;
-		void RenderImGui() override;
+		void RenderImGui( ApplicationLevelStuff& appStuff ) override;
 
-	private:
+	  private:
 		SceneStuff m_SceneStuff;
 
 		VideoRenderer m_VideoRenderer;
 
 		GameObject m_GO;
-
 	};
-}
+} // namespace MikuEngine

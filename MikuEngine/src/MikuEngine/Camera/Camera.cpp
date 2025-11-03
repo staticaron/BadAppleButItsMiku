@@ -4,10 +4,20 @@
 
 namespace MikuEngine
 {
+	Camera::Camera()
+	{
+		m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
+		m_RotationValue = 0.0f;
+	}
+
 	glm::mat4 Camera::GetViewProjectionMatrix() const
 	{
 		auto viewPortDimension = Application::GetDataContainer().GetViewportDimensions();
-		glm::mat4 projMatrix = glm::ortho( 0.0f, viewPortDimension.x, viewPortDimension.y, 0.0f, -1000.0f, 1000.0f );
+
+		float hw = viewPortDimension.x / ( 2 * m_Zoom );
+		float hh = viewPortDimension.y / ( 2 * m_Zoom );
+
+		glm::mat4 projMatrix = glm::ortho( -hw, hw, hh, -hh, -1000.0f, 1000.0f );
 		return projMatrix * GetViewMatrix();
 	}
 
@@ -21,12 +31,7 @@ namespace MikuEngine
 
 	glm::mat4 Camera::GetMVPFromModelMatrix( glm::mat4 modelMatrix ) const
 	{
-		auto viewPortDimension = Application::GetDataContainer().GetViewportDimensions();
-
-		glm::mat4 projMatrix = glm::ortho( 0.0f, viewPortDimension.x, viewPortDimension.y, 0.0f, -1000.0f, 1000.0f );
-		glm::mat4 viewMatrix = GetViewMatrix();
-
-		return projMatrix * viewMatrix * modelMatrix;
+		return GetViewProjectionMatrix() * modelMatrix;
 	}
 
 	void Camera::Translate( glm::vec3 delta )
@@ -41,13 +46,15 @@ namespace MikuEngine
 
 	void Camera::RenderImGui()
 	{
+		m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
+
 		ImGui::Begin( "Camera Properties" );
 
 		ImGui::SeparatorText( "Transform" );
-		ImGui::DragFloat3( "Position", &m_Position[0] );
-		ImGui::DragFloat3( "Rotation Axis", &m_RotationAxis[0] );
-		ImGui::DragFloat3( "Scale", &m_Scale[0] );
+		ImGui::DragFloat3( "Position", &m_Position[ 0 ] );
+		ImGui::DragFloat3( "Rotation Axis", &m_RotationAxis[ 0 ] );
+		ImGui::DragFloat( "Zoom", &m_Zoom, 0.1f, 1.0f, 100.0f );
 
 		ImGui::End();
 	}
-}
+} // namespace MikuEngine

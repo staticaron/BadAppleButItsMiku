@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef _WIN32
+#ifdef ME_PLATFORM_WINDOWS
 #ifdef ME_BUILD_DLL
 #define MIKU_API __declspec(dllexport)
 #else

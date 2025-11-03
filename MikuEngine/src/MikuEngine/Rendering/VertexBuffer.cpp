@@ -28,10 +28,10 @@ namespace MikuEngine
 
 	void VertexBuffer::PutData( const void* data, unsigned int size )
 	{
-		ASSERT( m_RendererID != 0 );
-		ASSERT( size <= m_Size );
+		ASSERT( m_RendererID != 0, "Renderer is not Initialized\n" );
+		ASSERT( size <= m_Size, "You are trying to put more data into a smaller buffer\n" );
 
 		Bind();
 		glBufferSubData( GL_ARRAY_BUFFER, 0, size, data );
 	}
-}
+} // namespace MikuEngine

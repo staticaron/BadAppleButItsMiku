@@ -28,10 +28,10 @@ namespace MikuEngine
 
 	void IndexBuffer::PutData( const void* data, unsigned int count )
 	{
-		ASSERT( m_RendererID != 0 );
-		ASSERT( count <= m_Count );
+		ASSERT( m_RendererID != 0, "Renderer is not Initialized!" );
+		ASSERT( count <= m_Count, "Can't put more data into a smaller buffer" );
 
 		Bind();
 		glBufferSubData( GL_ELEMENT_ARRAY_BUFFER, 0, sizeof( unsigned int ) * count, data );
 	}
-}
+} // namespace MikuEngine

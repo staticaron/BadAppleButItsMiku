@@ -23,17 +23,24 @@ namespace MikuEngine
 		glm::vec4 tint = glm::vec4( 1.0f );
 	};
 
+	struct MIKU_API RenderBatchDetails
+	{
+		std::vector<BatchParticleDetails> Particles;
+		glm::ivec2 BatchStartPosition = {};
+		unsigned int ParticleSize = 0, ParticleGap = 0;
+		std::string_view textureID = "miku_white";
+	};
+
 	class BatchRenderingManager
 	{
-	public:
-		BatchRenderingManager( unsigned int maxParticleCount, std::string_view textureIdentifier );
+	  public:
+		BatchRenderingManager( unsigned int maxParticleCount );
 		~BatchRenderingManager() = default;
 
-		void RenderBatch( const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff, const std::vector<BatchParticleDetails>& batchDetails );
+		void RenderBatch( const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff, const RenderBatchDetails& batchDetails );
 
-	protected:
+	  protected:
 		unsigned int m_MaxParticleCount;
-		std::string_view m_TextureID;
 
 		VertexBuffer m_VB;
 		VertexBufferLayout m_VBL;
@@ -41,4 +48,4 @@ namespace MikuEngine
 		VertexArray m_VA;
 		Shader m_Shader;
 	};
-}
+} // namespace MikuEngine

@@ -8,17 +8,21 @@ namespace MikuEngine
 {
 	class MIKU_API VideoRenderer : public BatchRenderingManager
 	{
-	public:
-		VideoRenderer( unsigned int maxParticleCount, std::string_view textureIdentifier );
+	  public:
+		VideoRenderer( unsigned int maxParticleCount, const std::string& videoFilePath );
 		~VideoRenderer() = default;
 
-		void Update( double dt );
+		void Init();
+
+		void Update( ApplicationLevelStuff& appStuff, double dt );
 		void UpdateFrame();
 
 		void Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff );
-		void RenderImGui();
+		void RenderImGui( ApplicationLevelStuff& appStuff );
 
-	private:
+	  private:
+		std::string m_VideoFilePath;
+
 		VideoLoader m_VideoLoader;
 
 		bool m_Playing = false;
@@ -31,6 +35,21 @@ namespace MikuEngine
 		const glm::ivec2 m_PixelSize = { 6, 6 };
 		const glm::ivec2 m_PixelGap = { 1, 1 };
 
-		std::vector<BatchParticleDetails> m_ParticleDetails;
+		std::array<std::string_view, 8> m_TextureIDs = {
+			"miku_white",
+			"miku_blue",
+			"miku_yellow",
+			"miku_purple",
+			"miku_cyan",
+			"miku_green",
+			"miku_red",
+			"miku_skyblue",
+		};
+
+		int m_TextureIndex = 0;
+		double m_TextureTime = 0.0;
+		double m_TextureChangeTime = 1.0;
+
+		RenderBatchDetails m_RenderBatchDetails;
 	};
-}
+} // namespace MikuEngine

@@ -4,10 +4,7 @@
 
 namespace MikuEngine
 {
-	VideoLoader::VideoLoader()
-	{
-
-	}
+	VideoLoader::VideoLoader() {}
 
 	VideoLoader::~VideoLoader()
 	{
@@ -16,7 +13,7 @@ namespace MikuEngine
 
 	void VideoLoader::FreeLoadedVideo()
 	{
-		if( m_VideoData != nullptr )
+		if ( m_VideoData != nullptr )
 			delete m_VideoData;
 	}
 
@@ -28,7 +25,7 @@ namespace MikuEngine
 
 		auto videoCapture = cv::VideoCapture( filepath.data() );
 
-		if( !videoCapture.isOpened() )
+		if ( !videoCapture.isOpened() )
 		{
 			spdlog::error( "Video File was not opened properly {}", filepath.data() );
 			return;
@@ -46,7 +43,7 @@ namespace MikuEngine
 		m_VideoWidth = firstFrame.cols;
 		m_VideoHeight = firstFrame.rows;
 
-		for( size_t f = 0; f < m_FrameCount; f++ )
+		for ( size_t f = 0; f < m_FrameCount; f++ )
 		{
 			VideoFrame newFrame;
 
@@ -59,15 +56,15 @@ namespace MikuEngine
 
 			bool readSuccssfull = videoCapture.read( frame );
 
-			if( frame.empty() )
+			if ( frame.empty() )
 				continue;
 
-			if( !readSuccssfull )
+			if ( !readSuccssfull )
 				spdlog::error( "Error reading frame! " );
 
-			for( size_t x = 0; x < frameDimensions.x; x++ )
+			for ( size_t x = 0; x < frameDimensions.x; x++ )
 			{
-				for( size_t y = 0; y < frameDimensions.y; y++ )
+				for ( size_t y = 0; y < frameDimensions.y; y++ )
 				{
 					uchar pixelValue = frame.at<uchar>( y, x * 3 );
 					newFrame.pixelData.push_back( pixelValue );
@@ -85,4 +82,4 @@ namespace MikuEngine
 		auto frame = m_VideoData->frames.at( frameNumber );
 		return frame.pixelData.at( x * GetVideoDimensions().y + y );
 	}
-}
+} // namespace MikuEngine

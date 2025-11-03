@@ -4,41 +4,37 @@
 
 namespace MikuEngine
 {
-	BatchRenderingManager::BatchRenderingManager(unsigned int maxParticleCount, std::string_view textureIdentifier) : m_MaxParticleCount(maxParticleCount), m_VB(nullptr, maxParticleCount * 4 * sizeof(BasicVertex)), m_IB(nullptr, maxParticleCount * 6), m_TextureID(textureIdentifier)
+	BatchRenderingManager::BatchRenderingManager( unsigned int maxParticleCount ) : m_MaxParticleCount( maxParticleCount ), m_VB( nullptr, maxParticleCount * 4 * sizeof( BasicVertex ) ), m_IB( nullptr, maxParticleCount * 6 )
 	{
-		m_VBL.Push<float>(3);
-		m_VBL.Push<float>(2);
-		m_VA.AddBuffer(m_VB, m_VBL);
+		m_VBL.Push<float>( 3 );
+		m_VA.AddBuffer( m_VB, m_VBL );
 
-		m_Shader.LoadFromFile(RESOURCE_DIR "shaders/base.shader");
-		m_Shader.SetUniform<glm::mat4>("u_MVP", glm::mat4(1.0f));
-		m_Shader.SetUniform<unsigned int>("u_Texture", 1);
+		m_Shader.LoadFromFile( RESOURCE_DIR "shaders/geo.shader" );
+		m_Shader.SetUniform( "u_Tex", 0 );
 	}
 
-	void BatchRenderingManager::RenderBatch(const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff, const std::vector<BatchParticleDetails>& batchDetails)
+	void BatchRenderingManager::RenderBatch( const Renderer& renderer, const ApplicationLevelStuff& appStuff, const SceneStuff& sceneStuff, const RenderBatchDetails& batchDetails )
 	{
-		std::vector<BasicVertex> vertices;
+		std::vector<BareboneVertex> vertices;
 		std::vector<unsigned int> indices;
 
-		for (int x = 0; x < batchDetails.size(); x++)
+		for ( int x = 0; x < batchDetails.Particles.size(); x++ )
 		{
-			auto transformedVerts = BasicQuad::GetVertsFromDetails(sceneStuff, batchDetails.at(x).position, batchDetails.at(x).size);
-			vertices.insert(vertices.end(), transformedVerts.begin(), transformedVerts.end());
+			BareboneVertex newVert = { batchDetails.Particles.at( x ).position };
+			vertices.push_back( newVert.ApplyTransform( sceneStuff.camera.GetMVPFromModelMatrix( glm::mat4( 1.0f ) ) ) );
 
-			auto transformedIndices = BasicQuad::GetDefaultIndices();
-			std::for_each(transformedIndices.begin(), transformedIndices.end(), [x](unsigned int& n) { n += 4 * x; }); // update the indices so that they reflect the current quad.
-
-			indices.insert(indices.end(), transformedIndices.begin(), transformedIndices.end());
+			indices.push_back( x );
 		}
 
-		m_Shader.SetUniform("u_MVP", glm::mat4(1.0f));
+		m_Shader.SetUniform<glm::mat4>( "u_MVP", sceneStuff.camera.GetMVPFromModelMatrix( glm::mat4( 1.0f ) ) );
+		m_Shader.SetUniform<float>( "u_QuadWidth", batchDetails.ParticleSize );
 
-		auto particleTexture = appStuff.textureManager.GetTextureByIdentifier(m_TextureID);
-		particleTexture.Bind(1);
+		auto texture = appStuff.textureManager.GetTextureByIdentifier( batchDetails.textureID );
+		texture.Bind( 0 );
 
-		m_VB.PutData(vertices.data(), sizeof(BasicVertex) * vertices.size());
-		m_IB.PutData(indices.data(), indices.size());
+		m_VB.PutData( vertices.data(), sizeof( BareboneVertex ) * vertices.size() );
+		m_IB.PutData( indices.data(), indices.size() );
 
-		renderer.DrawPoints(m_VA, m_IB, m_Shader);
+		renderer.DrawPoints( m_VA, m_IB, m_Shader, vertices.size() );
 	}
 } // namespace MikuEngine

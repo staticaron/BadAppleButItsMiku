@@ -3,7 +3,7 @@ BasedOnStyle: Microsoft
 AlignAfterOpenBracket: DontAlign
 AlignArrayOfStructures: Right
 AlignConsecutiveAssignments:
-  Enabled: true
+  Enabled: false
 AlignConsecutiveMacros:
   Enabled: true
 AlignOperands: DontAlign
@@ -33,3 +33,12 @@ NamespaceIndentation: All
 IndentWidth: 4
 TabWidth: 4
 UseTab: Always
+SpacesInParens: Custom
+SpacesInSquareBrackets: true
+SpacesInParensOptions:
+  ExceptDoubleParentheses: true
+  InConditionalStatements: true
+  InCStyleCasts: true
+  InEmptyParentheses: false
+  Other: true
+AllowShortFunctionsOnASingleLine: Inline
