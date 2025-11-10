@@ -18,7 +18,7 @@ namespace MikuEngine
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
-		(void)io;
+		( void )io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -55,7 +55,7 @@ namespace MikuEngine
 
 		ImGuiIO& io = ImGui::GetIO();
 
-		if( io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
+		if ( io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
 		{
 			GLFWwindow* backup_current_context = glfwGetCurrentContext();
 			ImGui::UpdatePlatformWindows();
@@ -70,13 +70,13 @@ namespace MikuEngine
 
 		ImVec2 windowSize = ImGui::GetWindowSize();
 
-		if( dataContainer.GetViewportDimensions() != *(glm::vec2*)&windowSize )
+		if ( dataContainer.GetViewportDimensions() != *( glm::vec2* )&windowSize )
 		{
 			frameBuffer.Resize( static_cast<float>( windowSize.x ), static_cast<float>( windowSize.y ) );
-			dataContainer.SetViewportDimensions( *(glm::vec2*)&windowSize );
+			dataContainer.SetViewportDimensions( *( glm::vec2* )&windowSize );
 		}
 
-		ImGui::Image( (void*)(intptr_t)textureID, { static_cast<float>( frameBuffer.GetSpecification().width ), static_cast<float>( frameBuffer.GetSpecification().height ) }, { 0, 1 }, { 1, 0 } );
+		ImGui::Image( ( void* )( intptr_t )textureID, { static_cast<float>( frameBuffer.GetSpecification().width ), static_cast<float>( frameBuffer.GetSpecification().height ) }, { 0, 1 }, { 1, 0 } );
 
 		ImGui::End();
 
@@ -88,4 +88,4 @@ namespace MikuEngine
 
 		ImGui::End();
 	}
-}
+} // namespace MikuEngine

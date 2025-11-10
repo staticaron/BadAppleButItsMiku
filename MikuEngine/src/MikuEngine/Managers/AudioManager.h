@@ -88,6 +88,7 @@ class MIKU_API AudioManager
 	std::unordered_map<std::string_view, SoundData> m_Streams;
 
 	std::unordered_map<std::string_view, std::string_view> m_StreamsToLoad = {
-		{ "bad", RESOURCE_DIR "audio/bad.mp3" }
-	};
+		{	  "bad",	 RESOURCE_DIR "audio/bad.mp3"},
+		 {"badmiku", RESOURCE_DIR "audio/badmiku.mp3"}
+	 };
 };

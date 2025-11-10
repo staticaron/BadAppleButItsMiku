@@ -23,15 +23,17 @@ namespace MikuEngine
 		std::unordered_map<std::string_view, std::string_view> m_TexturePaths = {
 			// clang-format off
 
-			{ "miku_blue", RESOURCE_DIR "textures/miku_blue.png"},
-			{ "miku_white",	RESOURCE_DIR "textures/miku_white.png"},
-		    { "miku_green", RESOURCE_DIR "textures/miku_green.png"},
+			{ "miku_blue",   RESOURCE_DIR "textures/miku_blue.png"},
+			{ "miku_white",	 RESOURCE_DIR "textures/miku_white.png"},
 			{ "miku_purple", RESOURCE_DIR "textures/miku_purple.png"},
-			{ "miku_cyan", RESOURCE_DIR "textures/miku_cyan.png"},
-			{ "miku_yellow",	RESOURCE_DIR "textures/miku_yellow.png"},
-		    { "miku_red", RESOURCE_DIR "textures/miku_red.png"},
-			{ "miku_black", RESOURCE_DIR "textures/miku_black.png"},
-			{ "miku_skyblue", RESOURCE_DIR "textures/miku_skyblue.png"},
+			{ "miku_pink",   RESOURCE_DIR "textures/miku_pink.png"},
+			{ "miku_yellow", RESOURCE_DIR "textures/miku_yellow.png"},
+		    { "miku_red",    RESOURCE_DIR "textures/miku_red.png"},
+			{ "miku_leaf",   RESOURCE_DIR "textures/miku_leaf.png"},
+			{ "miku_water",  RESOURCE_DIR "textures/miku_water.png"},
+			{ "miku_cherry", RESOURCE_DIR "textures/miku_cherry.png"},
+			{ "miku_paper",  RESOURCE_DIR "textures/miku_paper.png"},
+			{ "miku_scary",  RESOURCE_DIR "textures/miku_scary.png"},
 
 			// clang-format on
 		};

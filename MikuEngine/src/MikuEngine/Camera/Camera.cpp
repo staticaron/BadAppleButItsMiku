@@ -6,7 +6,7 @@ namespace MikuEngine
 {
 	Camera::Camera()
 	{
-		m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
+		// m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
 		m_RotationValue = 0.0f;
 	}
 
@@ -46,7 +46,7 @@ namespace MikuEngine
 
 	void Camera::RenderImGui()
 	{
-		m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
+		// m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
 
 		ImGui::Begin( "Camera Properties" );
 

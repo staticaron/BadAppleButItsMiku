@@ -35,15 +35,18 @@ namespace MikuEngine
 		const glm::ivec2 m_PixelSize = { 6, 6 };
 		const glm::ivec2 m_PixelGap = { 1, 1 };
 
-		std::array<std::string_view, 8> m_TextureIDs = {
-			"miku_white",
+		std::array<std::string_view, 11> m_TextureIDs = {
 			"miku_blue",
-			"miku_yellow",
+			"miku_white",
 			"miku_purple",
-			"miku_cyan",
-			"miku_green",
+			"miku_pink",
+			"miku_water",
+			"miku_yellow",
+			"miku_scary",
 			"miku_red",
-			"miku_skyblue",
+			"miku_leaf",
+			"miku_cherry",
+			"miku_paper",
 		};
 
 		int m_TextureIndex = 0;

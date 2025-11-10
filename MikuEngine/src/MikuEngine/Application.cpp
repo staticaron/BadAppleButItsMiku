@@ -36,6 +36,7 @@ namespace MikuEngine
 
 		glEnable( GL_DEBUG_OUTPUT );
 		glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS );
+		glDebugMessageControl( GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE );
 		glDebugMessageCallback( MikuEngine::Error::glDebugOutput, nullptr );
 
 		glEnable( GL_BLEND );
@@ -95,7 +96,7 @@ namespace MikuEngine
 	{
 		m_FrameBuffer.Bind();
 
-		glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+		glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
 		glClear( GL_COLOR_BUFFER_BIT );
 		RenderGeometry();
 
