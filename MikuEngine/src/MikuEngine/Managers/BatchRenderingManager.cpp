@@ -27,7 +27,7 @@ namespace MikuEngine
 		}
 
 		m_Shader.SetUniform<glm::mat4>( "u_MVP", sceneStuff.camera.GetMVPFromModelMatrix( glm::mat4( 1.0f ) ) );
-		m_Shader.SetUniform<float>( "u_QuadWidth", batchDetails.ParticleSize );
+		m_Shader.SetUniform<float>( "u_QuadWidth", batchDetails.ParticleSize * 0.5f );
 
 		auto texture = appStuff.textureManager.GetTextureByIdentifier( batchDetails.textureID );
 		texture.Bind( 0 );

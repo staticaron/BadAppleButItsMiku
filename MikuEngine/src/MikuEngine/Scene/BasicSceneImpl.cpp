@@ -12,6 +12,7 @@ namespace MikuEngine
 	void BasicSceneImpl::Update( ApplicationLevelStuff& appStuff, double dt )
 	{
 		m_VideoRenderer.Update( appStuff, dt );
+		m_SceneStuff.camera.Update( dt );
 	}
 
 	void BasicSceneImpl::Render( const Renderer& renderer, const ApplicationLevelStuff& appStuff )

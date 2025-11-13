@@ -6,7 +6,6 @@ namespace MikuEngine
 {
 	Camera::Camera()
 	{
-		// m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
 		m_RotationValue = 0.0f;
 	}
 
@@ -44,16 +43,68 @@ namespace MikuEngine
 		m_Position = newPos;
 	}
 
+	void Camera::Update( double dt )
+	{
+		if ( m_IsTweening )
+		{
+			if ( m_IsZoomingIn )
+			{
+				m_CurrentTweenTime += dt;
+
+				if ( m_CurrentTweenTime > m_TweenTime )
+				{
+					m_CurrentTweenTime = 0.0f;
+					m_IsTweening = false;
+					m_Zoom = m_MaxZoom;
+				}
+				else
+					m_Zoom = glm::mix( m_MinZoom, m_MaxZoom, m_CurrentTweenTime / m_TweenTime );
+			}
+			else
+			{
+				m_CurrentTweenTime += dt;
+
+				if ( m_CurrentTweenTime > m_TweenTime )
+				{
+					m_CurrentTweenTime = 0.0f;
+					m_IsTweening = false;
+					m_Zoom = m_MinZoom;
+				}
+				else
+					m_Zoom = glm::mix( m_MaxZoom, m_MinZoom, m_CurrentTweenTime / m_TweenTime );
+			}
+		}
+	}
+
 	void Camera::RenderImGui()
 	{
-		// m_Position = { glm::vec3( Application::GetDataContainer().GetViewportDimensions().x / 2.0f, Application::GetDataContainer().GetViewportDimensions().y / 2.0f, 0.0f ) };
-
 		ImGui::Begin( "Camera Properties" );
 
 		ImGui::SeparatorText( "Transform" );
 		ImGui::DragFloat3( "Position", &m_Position[ 0 ] );
 		ImGui::DragFloat3( "Rotation Axis", &m_RotationAxis[ 0 ] );
 		ImGui::DragFloat( "Zoom", &m_Zoom, 0.1f, 1.0f, 100.0f );
+		ImGui::Separator();
+
+		ImGui::DragFloat( "Zoom Time", &m_TweenTime );
+		if ( ImGui::Button( "Zoom Out" ) )
+		{
+			m_IsTweening = true;
+			m_IsZoomingIn = false;
+		}
+
+		if ( ImGui::Button( "Zoom In" ) )
+		{
+			m_IsTweening = true;
+			m_IsZoomingIn = true;
+		}
+
+		if ( ImGui::Button( "Reset Zoom" ) )
+		{
+			m_IsTweening = false;
+			m_IsZoomingIn = false;
+			m_CurrentTweenTime = 0.0f;
+		}
 
 		ImGui::End();
 	}

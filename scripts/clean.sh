@@ -5,24 +5,16 @@ rm -rf build/
 rm -rf .cache/
 echo "--------------"
 
-echo "Create New build/ folder"
-mkdir build/
-echo "--------------"
-
-echo "Moving into build/ folder"
-cd build
-echo "--------------"
-
 echo "Generate Project Files"
-cmake -GNinja ..
+cmake -G Ninja -B build -D CMAKE_BUILD_TYPE=Release -D OpenCV_DIR="C:/open-clang-install"
 echo "--------------"
 
 echo "Moving compile_commands.json to root directory of the project"
-cp compile_commands.json ..
+cp build/compile_commands.json .
 echo "--------------"
 
 echo "Build the project"
-ninja
+cmake --build build
 echo "--------------"
 
 echo "Finished!"

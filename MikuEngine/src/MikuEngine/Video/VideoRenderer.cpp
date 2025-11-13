@@ -9,8 +9,8 @@ namespace MikuEngine
 	void VideoRenderer::Init()
 	{
 		m_RenderBatchDetails.Particles.reserve( m_PixelWidth * m_PixelHeight );
-		m_RenderBatchDetails.ParticleGap = 1;
-		m_RenderBatchDetails.ParticleSize = 3;
+		m_RenderBatchDetails.ParticleGap = m_PixelGap.x;
+		m_RenderBatchDetails.ParticleSize = m_PixelSize.x;
 		m_RenderBatchDetails.BatchStartPosition = m_StartPosition;
 
 		m_VideoLoader.LoadVideo( m_VideoFilePath );
@@ -30,17 +30,55 @@ namespace MikuEngine
 				m_RenderBatchDetails.Particles.push_back( { quadPosition, m_PixelSize } );
 			}
 		}
+
+		m_ImpactPoints = CSVLoader::FetchSingleColumnValues( RESOURCE_DIR "data/peaks.csv" );
+		auto inactiveRegion1 = CSVLoader::FetchSingleColumnValues( RESOURCE_DIR "data/inactive_region1.csv" );
+		auto inactiveRegion2 = CSVLoader::FetchSingleColumnValues( RESOURCE_DIR "data/inactive_region2.csv" );
+
+		m_InactiveRegions.push_back( { 44.0f, 56.0f, inactiveRegion1 } );
+		m_InactiveRegions.push_back( { 112.0f, 142.0f, inactiveRegion2 } );
 	}
 
 	void VideoRenderer::Update( ApplicationLevelStuff& appStuff, double dt )
 	{
-		if ( m_Playing )
-			m_ElapsedTime += dt;
-
-		m_TextureTime += dt;
-		if ( m_TextureTime > m_TextureChangeTime )
+		if ( !m_Playing )
 		{
-			m_TextureTime = 0.0f;
+			if ( m_StartTextureSwapping )
+			{
+
+				m_TextureTime += dt;
+				if ( m_TextureTime > m_TextureChangeTime )
+				{
+					m_TextureTime = 0.0f;
+					m_TextureIndex = ( m_TextureIndex + 1 ) % m_TextureIDs.size();
+					m_RenderBatchDetails.textureID = m_TextureIDs.at( m_TextureIndex );
+				}
+			}
+
+			return;
+		}
+
+		m_ElapsedTime += dt;
+
+		/*auto& currentInactiveRegion = m_InactiveRegions[ m_InActiveRegionIndex ];
+
+		if ( m_ElapsedTime > currentInactiveRegion.RegionEndTime )
+		{
+			m_InActiveRegionIndex = glm::clamp( m_InActiveRegionIndex + 1, static_cast<unsigned int>( 0 ), static_cast<unsigned int>( m_InactiveRegions.size() - 1 ) );
+		}
+		else if ( m_ElapsedTime > currentInactiveRegion.RegionStartTime )
+		{
+			if ( m_ElapsedTime > currentInactiveRegion.RegionValues.at( currentInactiveRegion.RegionValueIndex ) )
+			{
+				currentInactiveRegion.RegionValueIndex++;
+				m_TextureIndex = ( m_TextureIndex + 1 ) % m_TextureIDs.size();
+				m_RenderBatchDetails.textureID = m_TextureIDs.at( m_TextureIndex );
+			}
+		}*/
+
+		if ( m_ElapsedTime > m_ImpactPoints.at( m_BeatLookupIndex ) )
+		{
+			m_BeatLookupIndex++;
 			m_TextureIndex = ( m_TextureIndex + 1 ) % m_TextureIDs.size();
 			m_RenderBatchDetails.textureID = m_TextureIDs.at( m_TextureIndex );
 		}
@@ -115,8 +153,14 @@ namespace MikuEngine
 		if ( ImGui::Button( " Restart " ) )
 			m_ElapsedTime = 0.0;
 
+		if ( ImGui::Button( "Start Texture Swapping " ) )
+			m_StartTextureSwapping = true;
+
 		if ( ImGui::DragInt( "TextureID", &m_TextureIndex, 1, 0, 8 ) )
 			m_RenderBatchDetails.textureID = m_TextureIDs.at( m_TextureIndex );
+
+		float elapsedTime = static_cast<float>( m_ElapsedTime );
+		ImGui::DragFloat( "Elapsed Time", &elapsedTime );
 
 		ImGui::End();
 	}

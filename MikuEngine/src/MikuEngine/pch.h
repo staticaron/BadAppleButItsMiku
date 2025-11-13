@@ -34,6 +34,8 @@
 #include "Managers/ImguiManager.h"
 #include "Managers/TextureManager.h"
 
+#include "Utils/CSVLoader.h"
+
 #include "Rendering/BasicQuad.h"
 #include "Rendering/FrameBuffer.h"
 #include "Rendering/IndexBuffer.h"

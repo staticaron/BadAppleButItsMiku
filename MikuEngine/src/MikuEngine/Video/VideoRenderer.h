@@ -6,6 +6,15 @@
 
 namespace MikuEngine
 {
+	struct InActiveRegion
+	{
+		float RegionStartTime = 0.0f;
+		float RegionEndTime = 0.0f;
+
+		std::vector<float> RegionValues = {};
+		unsigned int RegionValueIndex = 0;
+	};
+
 	class MIKU_API VideoRenderer : public BatchRenderingManager
 	{
 	  public:
@@ -26,14 +35,15 @@ namespace MikuEngine
 		VideoLoader m_VideoLoader;
 
 		bool m_Playing = false;
+		bool m_StartTextureSwapping = false;
 		double m_ElapsedTime = 0.0f;
 
 		const unsigned int m_PixelWidth = 86;
 		const unsigned int m_PixelHeight = 64;
 
-		const glm::ivec2 m_StartPosition = { 50, 50 };
-		const glm::ivec2 m_PixelSize = { 6, 6 };
-		const glm::ivec2 m_PixelGap = { 1, 1 };
+		const glm::ivec2 m_StartPosition = { 10, 10 };
+		const glm::ivec2 m_PixelSize = { 8, 8 };
+		const glm::ivec2 m_PixelGap = { 2, 2 };
 
 		std::array<std::string_view, 11> m_TextureIDs = {
 			"miku_blue",
@@ -52,6 +62,12 @@ namespace MikuEngine
 		int m_TextureIndex = 0;
 		double m_TextureTime = 0.0;
 		double m_TextureChangeTime = 1.0;
+
+		std::vector<float> m_ImpactPoints;
+		unsigned int m_BeatLookupIndex = 0;
+
+		std::vector<InActiveRegion> m_InactiveRegions;
+		unsigned int m_InActiveRegionIndex = 0;
 
 		RenderBatchDetails m_RenderBatchDetails;
 	};

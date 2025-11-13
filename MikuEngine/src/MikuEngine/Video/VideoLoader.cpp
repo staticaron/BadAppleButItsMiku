@@ -79,6 +79,9 @@ namespace MikuEngine
 
 	unsigned char VideoLoader::GetPixelData( uint32_t frameNumber, uint32_t x, uint16_t y ) const
 	{
+		if ( frameNumber >= m_FrameCount - 1 )
+			return 0;
+
 		auto frame = m_VideoData->frames.at( frameNumber );
 		return frame.pixelData.at( x * GetVideoDimensions().y + y );
 	}
