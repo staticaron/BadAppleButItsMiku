@@ -32,11 +32,6 @@ namespace MikuEngine
 		}
 
 		m_ImpactPoints = CSVLoader::FetchSingleColumnValues( RESOURCE_DIR "data/peaks.csv" );
-		auto inactiveRegion1 = CSVLoader::FetchSingleColumnValues( RESOURCE_DIR "data/inactive_region1.csv" );
-		auto inactiveRegion2 = CSVLoader::FetchSingleColumnValues( RESOURCE_DIR "data/inactive_region2.csv" );
-
-		m_InactiveRegions.push_back( { 44.0f, 56.0f, inactiveRegion1 } );
-		m_InactiveRegions.push_back( { 112.0f, 142.0f, inactiveRegion2 } );
 	}
 
 	void VideoRenderer::Update( ApplicationLevelStuff& appStuff, double dt )
@@ -45,7 +40,6 @@ namespace MikuEngine
 		{
 			if ( m_StartTextureSwapping )
 			{
-
 				m_TextureTime += dt;
 				if ( m_TextureTime > m_TextureChangeTime )
 				{
@@ -59,22 +53,6 @@ namespace MikuEngine
 		}
 
 		m_ElapsedTime += dt;
-
-		/*auto& currentInactiveRegion = m_InactiveRegions[ m_InActiveRegionIndex ];
-
-		if ( m_ElapsedTime > currentInactiveRegion.RegionEndTime )
-		{
-			m_InActiveRegionIndex = glm::clamp( m_InActiveRegionIndex + 1, static_cast<unsigned int>( 0 ), static_cast<unsigned int>( m_InactiveRegions.size() - 1 ) );
-		}
-		else if ( m_ElapsedTime > currentInactiveRegion.RegionStartTime )
-		{
-			if ( m_ElapsedTime > currentInactiveRegion.RegionValues.at( currentInactiveRegion.RegionValueIndex ) )
-			{
-				currentInactiveRegion.RegionValueIndex++;
-				m_TextureIndex = ( m_TextureIndex + 1 ) % m_TextureIDs.size();
-				m_RenderBatchDetails.textureID = m_TextureIDs.at( m_TextureIndex );
-			}
-		}*/
 
 		if ( m_ElapsedTime > m_ImpactPoints.at( m_BeatLookupIndex ) )
 		{

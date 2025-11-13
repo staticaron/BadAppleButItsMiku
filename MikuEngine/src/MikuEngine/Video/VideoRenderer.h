@@ -6,15 +6,6 @@
 
 namespace MikuEngine
 {
-	struct InActiveRegion
-	{
-		float RegionStartTime = 0.0f;
-		float RegionEndTime = 0.0f;
-
-		std::vector<float> RegionValues = {};
-		unsigned int RegionValueIndex = 0;
-	};
-
 	class MIKU_API VideoRenderer : public BatchRenderingManager
 	{
 	  public:
@@ -65,9 +56,6 @@ namespace MikuEngine
 
 		std::vector<float> m_ImpactPoints;
 		unsigned int m_BeatLookupIndex = 0;
-
-		std::vector<InActiveRegion> m_InactiveRegions;
-		unsigned int m_InActiveRegionIndex = 0;
 
 		RenderBatchDetails m_RenderBatchDetails;
 	};
