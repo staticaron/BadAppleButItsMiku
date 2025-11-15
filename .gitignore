@@ -4,7 +4,6 @@
 out/
 build/
 .vs/
-scripts/
 .cache
 compile_commands.json
 CMakeSettings.json
