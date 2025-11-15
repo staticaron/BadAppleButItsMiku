@@ -9,7 +9,7 @@
 - miku_paper: [pixiv](https://i.pximg.net/c/240x480/img-master/img/2025/10/26/21/39/29/136734406_p0_master1200.jpg)
 - miku_cherry: [pixiv](https://www.pixiv.net/en/artworks/136710831)
 
-If you find any of the missing sources, create an issue regarding it :)
+Contribute to missing sources by creating issues :)
 
 ## Video Sources
 - Bad Apply by kasidid2 @ [youtube](https://youtu.be/FtutLA63Cp8?si=Lt0v9mYjDwse2NNl)
