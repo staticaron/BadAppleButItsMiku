@@ -28,7 +28,7 @@ namespace MikuEngine
 		std::vector<BatchParticleDetails> Particles;
 		glm::ivec2 BatchStartPosition = {};
 		unsigned int ParticleSize = 0, ParticleGap = 0;
-		std::string_view textureID = "miku_white";
+		std::string_view textureID = "miku_leaf";
 	};
 
 	class BatchRenderingManager

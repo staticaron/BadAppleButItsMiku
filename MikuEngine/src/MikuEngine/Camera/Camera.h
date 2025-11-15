@@ -27,7 +27,7 @@ namespace MikuEngine
 		glm::vec3 m_Position = glm::vec3( 450.0f, 340.25f, 0.0f );
 
 		const float m_MinZoom = 1.0f;
-		const float m_MaxZoom = 80.0f;
+		const float m_MaxZoom = 100.0f;
 		float m_Zoom = 1.0f;
 
 		glm::vec3 m_RotationAxis = { 0.0f, 1.0f, 0.0f };
