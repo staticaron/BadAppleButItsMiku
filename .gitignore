@@ -7,7 +7,6 @@ build/
 scripts/
 .cache
 compile_commands.json
-CMakeSettings.json
 imgui.ini
 
 ### C++ ###
