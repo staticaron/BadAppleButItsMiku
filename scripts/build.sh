@@ -1,5 +1,7 @@
 #!/bin/bash
 
-cd build/
+cmake -G Ninja -B build
 
-ninja
+cmake --build build
+
+cp compile_commands.json ../

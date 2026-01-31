@@ -3,6 +3,7 @@ project("MikuEngine" CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glfw)
@@ -11,11 +12,11 @@ add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/stb)
 add_subdirectory(vendor/spdlog)
 
-set(FMOD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmod")
+set(FMOD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmod/linux")
 set(FMOD_INC_DIR "${FMOD_DIR}/inc")
-set(FMOD_LIB_DIR "${FMOD_DIR}/lib/x64")
+set(FMOD_LIB_DIR "${FMOD_DIR}/lib/x86_64")
 
-find_library(FMOD_LIBRARY NAMES fmod_vc PATHS ${FMOD_LIB_DIR})
+find_library(FMOD_LIBRARY NAMES fmod PATHS ${FMOD_LIB_DIR})
 
 find_package(OpenCV REQUIRED)
 
@@ -37,7 +38,6 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
 endif()
 
 target_compile_definitions(MikuEngine PUBLIC
-    ME_PLATFORM_WINDOWS
     ME_BUILD_DLL
     IMGUI_FONT="${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/fonts/jetbrainsmono.ttf"
     RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resources/"
@@ -68,9 +68,11 @@ set_target_properties(MikuEngine PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
 )
 
+if (DEFINED ME_PLATFORM_WINDOWS)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${FMOD_LIB_DIR}/fmod.dll"
         ${BIN_DIR}
     COMMENT "Copying FMOD dll files to the bin directory"
 )
+endif()

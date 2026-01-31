@@ -1,6 +1,20 @@
 #include "AudioManager.h"
 
+#include <fstream>
+
+#include "fmod_common.h"
 #include "pch.h"
+#include "spdlog/spdlog.h"
+
+static FMOD_RESULT FmodDebugCallback( FMOD_DEBUG_FLAGS flags, const char* file, int line, const char* func, const char* message )
+{
+	std::ofstream logStream( "logs/fmod.log", std::fstream::app );
+
+	logStream << "INFO @ file: " << file << " line: " << line << " func: " << func << ";";
+	logStream << "MESSAGE: " << message << "\n";
+
+	return FMOD_OK;
+}
 
 struct MIKU_API SoundLoadContext
 {
@@ -15,12 +29,14 @@ AudioManager::~AudioManager()
 
 void AudioManager::Init()
 {
+	FMOD::Debug_Initialize( FMOD_DEBUG_LEVEL_LOG, FMOD_DEBUG_MODE_CALLBACK, FmodDebugCallback, "" );
+
 	FMOD_RESULT systemCreationResult = FMOD::System_Create( &m_System, FMOD_VERSION );
 
 	ASSERT( systemCreationResult == FMOD_OK, "Failed to create FMOD System" );
-	spdlog::info( "FMOD System created successfully!" );
+	spdlog::info( "FMOD System created successfully! VERSION: {}", FMOD_VERSION );
 
-	FMOD_RESULT systemInitResult = m_System->init( 2, FMOD_INIT_NORMAL, nullptr );
+	FMOD_RESULT systemInitResult = m_System->init( 2, FMOD_INIT_NORMAL | FMOD_OUTPUTTYPE_AUTODETECT, nullptr );
 	spdlog::info( "FMOD System initialized successfully!" );
 
 	for ( auto& [ identifier, filepath ] : m_StreamsToLoad )

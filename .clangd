@@ -1,0 +1,4 @@
+CompileFlags:
+  Add: [-Wall, -Wextra]
+Format:
+  Style: file
